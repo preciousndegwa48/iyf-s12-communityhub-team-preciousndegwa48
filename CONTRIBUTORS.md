@@ -9,4 +9,4 @@
 - Pages: Home, Posts, PostDetail, CreatePost, About with React Router
 - Hooks: useFetch, useLocalStorage in src/hooks/
 - Features: Fetch from JSONPlaceholder with loading/error, useParams, create post
-- PR: [your new PR number once you open it]
+- PR: #20
