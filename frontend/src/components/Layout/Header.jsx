@@ -1,12 +1,15 @@
-export default function Header() {
+function Header({ onLogin }) {
   return (
-    <header style={{ padding: "16px", background: "#111827", color: "white", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <h1 style={{ fontSize: "20px", margin: 0 }}>CommunityHub</h1>
-      <nav style={{ display: "flex", gap: "16px" }}>
-        <span>Home</span>
-        <span>Posts</span>
-        <span>Profile</span>
+    <header classname="header">
+    <h1>CommunityHub</h1>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Posts</a>
+        <a href="#">Profile</a>
+        <a href="#">About</a>
       </nav>
+      <button onClick={onLogin}>Login</button>
     </header>
   );
 }
+export default Header;
