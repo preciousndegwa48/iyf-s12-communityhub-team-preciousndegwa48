@@ -1,122 +1,33 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Layout from "./components/Layout/Layout.jsx";
+import PostList from "./components/Post/PostList.jsx";
+import CreatePost from "./components/Post/CreatePost.jsx";
+import { sortNewestFirst, searchPosts } from "./utils/posts.js";
+
+const initialPosts = [
+  { id: 1, title: "Getting Started with React", excerpt: "Learn the basics of React...", author: "Amina Otieno", date: "2026-01-15", likes: 0 },
+  { id: 2, title: "JavaScript Best Practices", excerpt: "Write cleaner code...", author: "Brian Kamau", date: "2026-01-10", likes: 0 },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [posts, setPosts] = useState(initialPosts);
+  const [search, setSearch] = useState("");
+
+  const handleLike = (id) => setPosts(posts.map((p) => (p.id === id ? { ...p, likes: p.likes + 1 } : p)));
+  const handleDelete = (id) => setPosts(posts.filter((p) => p.id !== id));
+  const handleAddPost = (newPost) => setPosts([newPost, ...posts]);
+
+  const visiblePosts = sortNewestFirst(searchPosts(posts, search));
+  const totalLikes = posts.reduce((sum, p) => sum + p.likes, 0);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    <Layout>
+      <h2>Welcome to CommunityHub</h2>
+      <p>{posts.length} posts | {totalLikes} total likes</p>
+      <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search posts..." />
+      <CreatePost onAddPost={handleAddPost} />
+      <PostList posts={visiblePosts} onLike={handleLike} onDelete={handleDelete} />
+    </Layout>
+  );
 }
-
-export default App
+export default App;
