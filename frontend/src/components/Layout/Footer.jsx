@@ -1,7 +1,9 @@
-export default function Footer() {
+function Footer() {
   return (
-    <footer style={{ padding: "16px", background: "#111827", color: "white", textAlign: "center", marginTop: "24px" }}>
-      <p style={{ margin: 0 }}>© 2026 CommunityHub - IYF S12 Team Precious</p>
+    <footer className="footer">
+      <a href="#">About</a> | <a href="#">Contact</a> | <a href="#">Privacy</a>
+      <p>&copy; 2026 CommunityHub - IYF S12 Team Precious</p>
     </footer>
   );
 }
+export default Footer;
