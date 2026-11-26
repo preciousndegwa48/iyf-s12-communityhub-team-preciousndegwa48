@@ -1,4 +1,4 @@
-import Postcard from ".PostCard.jsx;
+import Postcard from ".PostCard.jsx";
   function PostList({posts, onLike, onDelete }) {
     if (posts.length === 0) return <p> No posts found</p>;
     return (
